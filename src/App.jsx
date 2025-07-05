@@ -1,10 +1,10 @@
 import React from "react";
+import Body from "./components/Body";
+
 
 const App = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline bg-red-900">Hello worlsd!</h1>
-    </div>
+    <Body/>
   );
 };
 
