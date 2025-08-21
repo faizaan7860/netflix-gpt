@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import { z } from "zod";
+import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 // Step 1: Create schema (the rules)
 const SignUpSchema = z.object({
@@ -20,13 +26,14 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   function toggleSignInForm() {
     setIsSignIn(!isSignIn);
   }
 
   // Step 2: Submit function
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const formData = { name, email, password };
@@ -40,10 +47,47 @@ function Login() {
       result.error.issues.forEach((err) => {
         newErrors[err.path[0]] = err.message;
       });
-      setErrors(newErrors)
-    }else{
-      setErrors({});
-      console.log("✅ Success:", result.data);
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+
+    if (!isSignIn) {
+      // (Sign Up branch)
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log("✅ Registered user:", userCredential.user.email);
+        alert("Account created successfully!");
+
+        setName("");
+        setEmail("");
+        setPassword("");
+      } catch (err) {
+        console.error("❌ Signup error:", err.message);
+        setErrors((prev) => ({ ...prev, api: err.message }));
+      }
+    } else {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log("✅ Logged in user:", userCredential.user.email);
+        navigate("/browse");
+
+        setEmail("");
+        setPassword("");
+      } catch (err) {
+        console.error("❌ Signin error:", err.message);
+        setErrors((prev) => ({ ...prev, api: err.message }));
+        navigate("/login");
+      }
     }
   }
 
@@ -71,14 +115,16 @@ function Login() {
 
         {!isSignIn && (
           <>
-          <input
-            type="text"
-            placeholder="Full name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="p-2 m-2 w-full rounded bg-slate-700 text-white"
-          />
-          {errors.name && <p className="text-red-500 text-md font-bold">{errors.name}</p>}
+            <input
+              type="text"
+              placeholder="Full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 m-2 w-full rounded bg-slate-700 text-white"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-md font-bold">{errors.name}</p>
+            )}
           </>
         )}
 
@@ -89,7 +135,9 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           className="p-2 m-2 w-full rounded bg-slate-700 text-white"
         />
-        {errors.email && <p className="text-red-500 text-md font-bold">{errors.email}</p>}
+        {errors.email && (
+          <p className="text-red-500 text-md font-bold">{errors.email}</p>
+        )}
 
         <input
           type="password"
@@ -98,7 +146,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           className="p-2 m-2 w-full rounded bg-slate-700 text-white"
         />
-        {errors.password && <p className="text-red-500 text-md font-bold">{errors.password}</p>}
+        {errors.password && (
+          <p className="text-red-500 text-md font-bold">{errors.password}</p>
+        )}
 
         <button
           type="submit"
@@ -106,6 +156,9 @@ function Login() {
         >
           Submit
         </button>
+        {errors.api && (
+          <p className="text-red-500 text-md font-bold">{errors.api}</p>
+        )}
 
         <p
           onClick={toggleSignInForm}

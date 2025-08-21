@@ -1,24 +1,25 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Browse from "./Browse";
 import Login from "./Login";
 
+
 function Body() {
+  const user = useSelector((store) => store.user);
+
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <Login />,
+      element: user ? <Navigate to="/browse" /> : <Login />,
     },
     {
       path: "/browse",
-      element: <Browse />,
+      element: user ? <Browse /> : <Navigate to="/" />,
     },
   ]);
-  return (
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
-  );
+
+  return <RouterProvider router={appRouter} />;
 }
 
 export default Body;

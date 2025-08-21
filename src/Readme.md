@@ -5,8 +5,12 @@
 -Routing of App
 -Login form
 -Sign up form
--Form validation
--useRef Hook
+-Form validation(Using Zod)
+-Firebase setup
+-Deploying on firebase
+-Create SignUp user account
+-craete Redux store with createSlice
+-Sign out after Login
 
 
 
