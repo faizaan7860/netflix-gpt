@@ -11,7 +11,7 @@
 -Create SignUp user account
 -craete Redux store with createSlice
 -Sign out after Login
-
+-Created a Constant file and stored link in there 
 
 
 # Features
