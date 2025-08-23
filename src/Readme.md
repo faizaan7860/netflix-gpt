@@ -12,6 +12,12 @@
 -craete Redux store with createSlice
 -Sign out after Login
 -Created a Constant file and stored link in there 
+- Register TMDB APi & create an app and get access token
+- Get Data from TMDB now playing movies list
+- Craeted a custom hook
+- Updated the store with data 
+-Planning for  Main Container and secondary
+-Embedded the youtube video make it autoplay and mute 
 
 
 # Features
