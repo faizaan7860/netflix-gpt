@@ -7,10 +7,13 @@ export const USERICON =
 export const BGIMG =
   "https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_small.jpg";
 
-export const API_OPTIONS =  {
-  method: 'GET',
+export const API_OPTIONS = {
+  method: "GET",
   headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDViMzBkYmQ5OGYxYWMxY2E2ODE2ZDE4OWMzYjI4MCIsIm5iZiI6MTc1NTg2Nzg0Ni4zNTMsInN1YiI6IjY4YTg2YWM2ZDQzODY5MjI4NTYwZGEyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UkrMoqBF2lJXNiLxR2yJaWSscLDYe6ZG9DDcY4TF9eI'
-  }
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDViMzBkYmQ5OGYxYWMxY2E2ODE2ZDE4OWMzYjI4MCIsIm5iZiI6MTc1NTg2Nzg0Ni4zNTMsInN1YiI6IjY4YTg2YWM2ZDQzODY5MjI4NTYwZGEyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UkrMoqBF2lJXNiLxR2yJaWSscLDYe6ZG9DDcY4TF9eI",
+  },
 };
+
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
